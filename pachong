@@ -1,0 +1,42 @@
+# This is a sample Python script.
+
+# Press Shift+F10 to execute it or replace it with your code.
+# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+from selenium import webdriver
+from  selenium.webdriver.common.by import By
+
+from selenium.webdriver.common.keys import Keys
+import time
+
+driver=webdriver.Edge(executable_path = r'C:\Users\TBS\Documents\pachongku\edgedriver_win64\msedgedriver.exe')#初始化WebDriver对象
+driver.get('https://www.bilibili.com/')#访问百度
+
+#如果有多个元素被匹配，find_element只会获取第一个
+#result=driver.find_element(by=By.CSS_SELECTOR,value='.mnav.c-font-normal.c-color-t')
+#print(result,'\n','---------------')
+#匹配多个find_elements
+#result_list=driver.find_elements(by=By.CSS_SELECTOR,value='.mnav.c-font-normal.c-color-t')
+#for item in result_list:
+#    print(item)
+#print('---------------')
+#result_byid=driver.find_element(by=By.NAME,value='tj_more')
+last_height = driver.execute_script("return document.body.scrollHeight")
+###
+# 模拟下拉操作，直到滑动到底部
+while True:
+    # 模拟下拉操作
+    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+
+    # 等待页面加载
+    time.sleep(2)
+
+    # 获取当前页面的高度
+    new_height = driver.execute_script("return document.body.scrollHeight")
+
+    # 判断是否已经到达页面底部
+    if new_height == last_height:
+        print("到了")
+        break
+
+    # 继续下拉操作
+    last_height = new_height
